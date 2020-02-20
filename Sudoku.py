@@ -24,15 +24,7 @@ start=[0,7,5,0,9,0,0,0,6,
 
 global game
 
-game=[0,7,5,0,9,0,0,0,6,
-              0,2,3,0,8,0,0,4,0,
-              8,0,0,0,0,3,0,0,1,
-              5,0,0,7,0,2,0,0,0,
-              0,4,0,8,0,6,0,2,0,
-              0,0,0,9,0,1,0,0,3,
-              9,0,0,4,0,0,0,0,7,
-              0,6,0,0,7,0,5,8,0,
-              7,0,0,0,1,0,3,9,0]
+game=start.copy()
 
 #Predefined Solved
 
@@ -86,7 +78,7 @@ def choose(btn_x, btn_y):
     def do_cancel():
         window.destroy()
 
-    ok = Button(bframe, command=lambda: do_ok(), text="Ok")
+    ok = Button(bframe, command=do_ok, text="Ok")
     ok.pack(side='left', fill='x', expand='1')
 
     cancel = Button(bframe, command=do_cancel, text="Cancel")
@@ -104,9 +96,9 @@ def new():
     game=start.copy()
     for z in range(9):
         for w in range(9):
-                exec('a' + str(z) + str(w) + f'.config(text = game[(z*9)+w])')
+                exec('a' + str(z) + str(w) + '.config(text = game[(z*9)+w])')
                 if game[(z*9)+w]==0:
-                    exec('a' + str(z) + str(w) + f'.config(state = NORMAL)')
+                    exec('a' + str(z) + str(w) + '.config(state = NORMAL)')
     file.entryconfig(file.index("Load Game"),state=NORMAL)
     file.entryconfig(file.index("Save Game"),state=NORMAL)
     file.entryconfig(file.index("Check Result"),state=NORMAL)
@@ -120,7 +112,7 @@ def load():
             game = pickle.load(save_game)
         for z in range(9):
             for w in range(9):
-                    exec('a' + str(z) + str(w) + f'.config(text = game[(z*9)+w])')
+                    exec('a' + str(z) + str(w) + '.config(text = game[(z*9)+w])')
         messagebox.showinfo("Restored", "Your progress has been restored")
     except:
         messagebox.showerror("Error", "Please save a game before using function")
@@ -151,7 +143,7 @@ def sol():
             index=(z*9)+w
             game[index]=text
             exec('a' + str(z) + str(w) + f'.config(text = {text})')
-            exec('a' + str(z) + str(w) + f'.config(state = DISABLED)')
+            exec('a' + str(z) + str(w) + '.config(state = DISABLED)')
             file.entryconfig(file.index("Load Game"),state=DISABLED)
             file.entryconfig(file.index("Save Game"),state=DISABLED)
             file.entryconfig(file.index("Check Result"),state=DISABLED)
@@ -171,8 +163,6 @@ for rowindex in range (9):
 
         x = start[k]
         k = k+1
-        if k == 81:
-            k=0
         if x == 0:
             colourTxt = "blue"
         else:
@@ -182,7 +172,7 @@ for rowindex in range (9):
         exec(btn_name + ' = Button(root, width=6, height=3, bg=colour,fg=colourTxt, text=x,command=lambda i=rowindex, j=colindex : choose(i,j))')
         exec(btn_name + '.grid(row=rowindex, column=colindex, sticky=N+S+E+W)')
         if colourTxt == 'black':
-            exec('a' + str(rowindex) + str(colindex) + f'.config(state = DISABLED)')
+            exec('a' + str(rowindex) + str(colindex) + '.config(state = DISABLED)')
 
 #Option Menu
 
