@@ -44,8 +44,6 @@ global k
 
 k=0
 
-list=[start,game,gameSolved]
-
 #Choose Window
 
 def chooseWindow():
