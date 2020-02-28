@@ -1,4 +1,4 @@
-#Python Sudoku
+# Python Sudoku
 
 [Downloads](https://github.com/VarunS2002/Python/releases)
 
