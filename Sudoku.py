@@ -2,56 +2,75 @@ from tkinter import *
 from tkinter import messagebox
 import pickle
 import os
+import random
+import array_module
 
 # Main Window
 
 root = Tk()
 root.title("Sudoku")
 root.resizable(False, False)
+grid_frame = Frame(root)
 
 # Creates Empty Save File
 
 save_exists = os.path.isfile("save_game")
+save_exists2 = os.path.isfile("save_game2")
+save_exists3 = os.path.isfile("save_game3")
+
 if save_exists:
     pass
 else:
-    create_save = open("save_game", "wb")
-    create_save.close()
+    create_save = open("save_game", "xb")
+if save_exists2:
+    pass
+else:
+    create_save2 = open("save_game2", "xb")
+if save_exists3:
+    pass
+else:
+    create_save3 = open("save_game3", "xb")
+
+# Flag
+
+global flag
+flag = random.randint(1, 3)
+global a
+a = str(flag)
 
 # Predefined Unsolved
 
-start = [0, 7, 5, 0, 9, 0, 0, 0, 6,
-         0, 2, 3, 0, 8, 0, 0, 4, 0,
-         8, 0, 0, 0, 0, 3, 0, 0, 1,
-         5, 0, 0, 7, 0, 2, 0, 0, 0,
-         0, 4, 0, 8, 0, 6, 0, 2, 0,
-         0, 0, 0, 9, 0, 1, 0, 0, 3,
-         9, 0, 0, 4, 0, 0, 0, 0, 7,
-         0, 6, 0, 0, 7, 0, 5, 8, 0,
-         7, 0, 0, 0, 1, 0, 3, 9, 0]
+global start
+start = []
 
 # Predefined Editable
 
 global game
-
 game = start.copy()
 
 # Predefined Solved
 
-gameSolved = [1, 7, 5, 2, 9, 4, 8, 3, 6,
-              6, 2, 3, 1, 8, 7, 9, 4, 5,
-              8, 9, 4, 5, 6, 3, 2, 7, 1,
-              5, 1, 9, 7, 3, 2, 4, 6, 8,
-              3, 4, 7, 8, 5, 6, 1, 2, 9,
-              2, 8, 6, 9, 4, 1, 7, 5, 3,
-              9, 3, 8, 4, 2, 5, 6, 1, 7,
-              4, 6, 1, 3, 7, 9, 5, 8, 2,
-              7, 5, 2, 6, 1, 8, 3, 9, 4]
+global gameSolved
+gameSolved = []
 
-# Variables and Lists
+# Populating Arrays
+
+if flag == 1:
+    start = array_module.start_1.copy()
+    game = start.copy()
+    gameSolved = array_module.gameSolved_1.copy()
+elif flag == 2:
+    start = array_module.start_2.copy()
+    game = start.copy()
+    gameSolved = array_module.gameSolved_2.copy()
+elif flag == 3:
+    start = array_module.start_3.copy()
+    game = start.copy()
+    gameSolved = array_module.gameSolved_3.copy()
+
+# Variables
 
 global k
-
 k = 0
 
 
@@ -68,13 +87,13 @@ def choose_window():
     return window
 
 
-# Choose Function
+# Choose Game Function
 
-def choose(btn_x, btn_y):
+def choose_game():
     window = choose_window()
     listbox = Listbox(window)
-    for i in range(1, 10):
-        listbox.insert(END, i)
+    for u in range(1, 4):
+        listbox.insert(END, u)
     listbox.focus_force()
     bframe = Frame(window)
 
@@ -82,9 +101,28 @@ def choose(btn_x, btn_y):
 
     def do_ok():
         text = listbox.get(ACTIVE)
-        exec('a' + str(btn_x) + str(btn_y) + f'.config(text = {text})')
-        index = (btn_x * 9) + btn_y
-        game[index] = text
+        global start
+        global game
+        global gameSolved
+        global flag
+        if text == 1:
+            start = array_module.start_1.copy()
+            game = start.copy()
+            gameSolved = array_module.gameSolved_1.copy()
+            flag = 1
+        elif text == 2:
+            start = array_module.start_2.copy()
+            game = start.copy()
+            gameSolved = array_module.gameSolved_2.copy()
+            flag = 2
+        elif text == 3:
+            start = array_module.start_3.copy()
+            game = start.copy()
+            gameSolved = array_module.gameSolved_3.copy()
+            flag = 3
+        global a
+        a = str(flag)
+        new()
         window.destroy()
 
     # Cancel Button Function
@@ -104,16 +142,35 @@ def choose(btn_x, btn_y):
     window.mainloop()
 
 
+# Choose Number Function
+
+def choose(btn_x, btn_y):
+    x = 'a' + str(btn_x) + str(btn_y)
+    exec('y=' + x + str(['text']), globals())
+    global y
+    y = (y % 9) + 1
+    exec('a' + str(btn_x) + str(btn_y) + f'.config(text ={y} )')
+    index = (btn_x * 9) + btn_y
+    game[index] = y
+
+
 # Restart Game Function
 
 def new():
     global game
     game = start.copy()
+    global colourTxt
     for z in range(9):
         for w in range(9):
             exec('a' + str(z) + str(w) + '.config(text = game[(z*9)+w])')
             if game[(z * 9) + w] == 0:
                 exec('a' + str(z) + str(w) + '.config(state = NORMAL)')
+                colourTxt = "blue"
+            else:
+                colourTxt = "black"
+                exec('a' + str(z) + str(w) + '.config(state = DISABLED)')
+            exec('a' + str(z) + str(w) + '.config(fg = colourTxt)')
+    file.entryconfig(file.index(0), label=f"Choose Game: {a}", state=NORMAL)
     file.entryconfig(file.index("Load Game"), state=NORMAL)
     file.entryconfig(file.index("Save Game"), state=NORMAL)
     file.entryconfig(file.index("Check Result"), state=NORMAL)
@@ -122,33 +179,57 @@ def new():
 # Load Function
 
 def load():
-    global game
-    try:
-        with open('save_game', 'rb') as save_game:
-            game = pickle.load(save_game)
-        for z in range(9):
-            for w in range(9):
-                exec('a' + str(z) + str(w) + '.config(text = game[(z*9)+w])')
-        messagebox.showinfo("Restored", "Your progress has been restored")
-    except:
-        messagebox.showerror("Error", "Please save a game before using function")
+    def load2(f):
+        global game
+        try:
+            with open(f, 'rb') as save_game:
+                game = pickle.load(save_game)
+            for z in range(9):
+                for w in range(9):
+                    exec('a' + str(z) + str(w) + '.config(text = game[(z*9)+w])')
+            messagebox.showinfo("Restored", "Your progress has been restored")
+        except:
+            messagebox.showerror("Error", "Please save a game before using function")
+
+    if flag == 1:
+        load2('save_game')
+    elif flag == 2:
+        load2('save_game2')
+    elif flag == 3:
+        load2('save_game3')
 
 
 # Save Function
 
 def save():
-    with open('save_game', 'wb') as save_game:
-        pickle.dump(game, save_game)
-    messagebox.showinfo("Saved", "Your progress has been saved")
+    def save2(f):
+        with open(f, 'wb') as save_game:
+            pickle.dump(game, save_game)
+        messagebox.showinfo("Saved", "Your progress has been saved")
+
+    if flag == 1:
+        save2('save_game')
+    elif flag == 2:
+        save2('save_game2')
+    elif flag == 3:
+        save2('save_game3')
 
 
 # Clear Save Function
 
 def clear():
-    save = open("save_game", "wb")
-    save.flush()
-    save.close()
-    messagebox.showinfo("Cleared Save", "Your saved game has been cleared")
+    def clear2(f):
+        save = open(f, "wb")
+        save.flush()
+        save.close()
+        messagebox.showinfo("Cleared Save", "Your saved game has been cleared")
+
+    if flag == 1:
+        clear2("save_game")
+    elif flag == 2:
+        clear2("save_game2")
+    elif flag == 3:
+        clear2("save_game3")
 
 
 # Result Function
@@ -199,22 +280,28 @@ for rowindex in range(9):
         btn_name = ''
         exec('btn_name = "a" + str(rowindex) + str(colindex)')
         exec(
-            btn_name + '= Button(root, width=6, height=3, bg=colour,fg=colourTxt, text=x,command=lambda i=rowindex, '
+            btn_name + '= Button(grid_frame, width=8, height=4, bg=colour,fg=colourTxt, text=x,command=lambda '
+                       'i=rowindex, '
                        'j=colindex : choose(i,j))')
         exec(btn_name + '.grid(row=rowindex, column=colindex, sticky=N+S+E+W)')
         if colourTxt == 'black':
             exec('a' + str(rowindex) + str(colindex) + '.config(state = DISABLED)')
+        grid_frame.pack()
 
 # Option Menu
 
 menubar = Menu(root)
 file = Menu(menubar, tearoff=0)
+file.add_command(label=f"Choose Game: {a}", command=choose_game)
 file.add_command(label="Restart Game", command=new)
+file.add_separator()
 file.add_command(label="Load Game", command=load)
 file.add_command(label="Save Game", command=save)
 file.add_command(label="Clear Saved Game", command=clear)
+file.add_separator()
 file.add_command(label="Check Result", command=check)
 file.add_command(label="Show Solution", command=sol)
+file.add_separator()
 file.add_command(label="Quit", command=exit)
 menubar.add_cascade(label="Menu", menu=file)
 root.config(menu=menubar)
