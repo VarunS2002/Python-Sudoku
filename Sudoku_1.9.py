@@ -123,8 +123,16 @@ def choose_game():
 
     def do_ok():
         text = listbox.get(ACTIVE)
-        global start
         global game
+        global start
+        if game != start:
+            ask_change_save = messagebox.askyesno("Save", "Do you want to save the game before start a new game?")
+            if ask_change_save == True:
+                save()
+            elif ask_change_save == False:
+                pass
+        else:
+            pass
         global game_solved
         global flag
         if text == 1:
@@ -312,14 +320,17 @@ def about():
 # Quit Function
 
 def close():
-    ask_quit = messagebox.askyesnocancel("Quit", "Do you want to save the game before quitting?")
-    if ask_quit == True:
-        save()
+    if game != start:
+        ask_quit = messagebox.askyesnocancel("Quit", "Do you want to save the game before quitting?")
+        if ask_quit == True:
+            save()
+            quit()
+        elif ask_quit == False:
+            quit()
+        elif ask_quit is None:
+            pass
+    else:
         quit()
-    elif ask_quit == False:
-        quit()
-    elif ask_quit is None:
-        pass
 
 
 # Grid
