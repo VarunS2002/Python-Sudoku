@@ -4,9 +4,11 @@
 
 This is a fully fledged sudoku game written in Python using Tkinter GUI and uses files for data
 
-Note:
+Usage:
 
 -Place array_module file in the same folder as the Sudoku and run the Sudoku file
+
+Note:
 
 -The array_module file has 3 games defined by default which are hard coded in the Sudoku program
 
