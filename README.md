@@ -6,7 +6,7 @@ This is a fully fledged sudoku game written in Python using Tkinter GUI and uses
 
 Usage:
 
--Place array_module file in the same folder as the Sudoku and run the Sudoku file
+-Place array_module file in the same folder as the sudoku and run the sudoku file
 
 Note:
 
