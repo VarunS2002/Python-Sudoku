@@ -1,14 +1,14 @@
 # Python Sudoku
 
-[Downloads](https://github.com/VarunS2002/Python-Sudoku/releases)
+### [Downloads](https://github.com/VarunS2002/Python-Sudoku/releases)
 
 This is a fully fledged sudoku game written in Python using Tkinter GUI and uses files for data
 
-Usage:
+## Usage:
 
 -Place array_module file in the same folder as the sudoku and run the sudoku file
 
-Note:
+## Note:
 
 -The array_module file has 3 games defined by default which are hard coded in the Sudoku program
 
@@ -16,7 +16,7 @@ Note:
 
 -The 3 save game files have completely solved saves of the 3 pre-defined games 
 
-Features:
+## Features:
 
 -Input numbers in the grid by repeatedly clicking a box
 
