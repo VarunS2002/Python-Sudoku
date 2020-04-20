@@ -18,6 +18,10 @@ Note:
 
 Features:
 
+-3 different games
+
+-Randomly chooses one game on start
+
 -Shows you the game currently active
 
 -Added Choose Game option to manually change the game
