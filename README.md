@@ -18,6 +18,8 @@ Note:
 
 Features:
 
+-Input numbers in the grid by repeatedly clicking a box
+
 -3 different games
 
 -Randomly chooses one game on start
