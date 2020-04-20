@@ -16,3 +16,26 @@ Note:
 
 -The 3 save game files have completely solved saves of the 3 pre-defined games 
 
+Features:
+
+-Shows you the game currently active
+
+-Added Choose Game option to manually change the game
+
+-Restart Game option
+
+-Save game state option
+
+-3 different save files for each game
+
+-Load saved game state option
+
+-Clear Saved Game option to clear the previously saved game
+
+-Check Result option
+
+-Show Solution option
+
+-About option with version, link for releases and for sources
+
+-PEP 8 format
