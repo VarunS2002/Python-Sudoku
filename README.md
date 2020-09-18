@@ -1,6 +1,9 @@
 # Python Sudoku
 
 ### [Downloads](https://github.com/VarunS2002/Python-Sudoku/releases)
+![Download-Count](https://img.shields.io/github/downloads/VarunS2002/Python-Sudoku/total?color=brightgreen)
+![Build: passing](https://img.shields.io/badge/build-passing-brightgreen)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 This is a fully fledged sudoku game written in Python using Tkinter GUI and uses files for data
 
